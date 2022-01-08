@@ -49,12 +49,27 @@ function displayBullets() {
     document.getElementById('bullets').innerHTML = output;
 }
 
+function collisionDetection() {
+    for (let b = 0; b < bullets.length; b++) {
+        for (let e = 0; e < enemies.length; e++) {
+            if ((bullets[b].x-enemies[e].x)**2+(bullets[b].y-enemies[e].y)**2 < 65) {
+                bullets[b] = bullets[bullets.length-1]
+                bullets.pop();
+                enemies[e].y = 0;
+                enemies[e].x = Math.random()*500;
+            }
+            
+        }
+    }
+}
+
 function gameLoop() {
     displayHero();
     moveEnemies();
     displayEnemies();
     moveBullets();
     displayBullets();
+    collisionDetection();
 }
 
 setInterval(gameLoop, 20)
